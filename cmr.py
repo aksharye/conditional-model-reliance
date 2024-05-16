@@ -4,7 +4,7 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from xgboost import XGBClassifier, XGBRegressor
 import numpy as np
 import pandas as pd
-
+from tqdm import tqdm
 
 class CMR:
     """
@@ -126,14 +126,15 @@ class CMR:
       return feature_unique, feature_pred
     
     def importance_all(self, mode="array"):
+      print(f"Computing importances for {self.num_features} features")
       if mode == "list":
         importance_list = []
-        for i in range(self.num_features):
+        for i in tqdm(range(self.num_features)):
           importance_list.append((i, self.feature_importance(i)))
         return sorted(importance_list, key=lambda x:(-x[1],x[0]))
       
       importance_list = []
-      for i in range(self.num_features):
+      for i in tqdm(range(self.num_features)):
         importance_list.append(self.feature_importance(i))
         
       return importance_list
