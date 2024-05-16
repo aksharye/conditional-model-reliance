@@ -4,6 +4,7 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from xgboost import XGBClassifier, XGBRegressor
 import numpy as np
 import pandas as pd
+from pqdm.threads import pqdm
 from tqdm import tqdm
 
 class CMR:
@@ -106,6 +107,9 @@ class CMR:
       importance = scrambled_score - self.baseline_score
       
       return importance
+
+    def feature_importance_tuple(self, feature):
+      return (feature, self.feature_importance(feature))
       
     def feature_unique_info(self, feature, feature_pred):
       # Imputation procedure for categorical, randomized
@@ -128,14 +132,9 @@ class CMR:
     def importance_all(self, mode="array"):
       print(f"Computing importances for {self.num_features} features")
       if mode == "list":
-        importance_list = []
-        for i in tqdm(range(self.num_features)):
-          importance_list.append((i, self.feature_importance(i)))
+        importance_list = pqdm(range(self.num_features), self.feature_importance_tuple, n_jobs=self.n_jobs)
         return sorted(importance_list, key=lambda x:(-x[1],x[0]))
       
-      importance_list = []
-      for i in tqdm(range(self.num_features)):
-        importance_list.append(self.feature_importance(i))
-        
+      importance_list = pqdm(range(self.num_features), self.feature_importance, n_jobs=self.n_jobs)
       return importance_list
 
