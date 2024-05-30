@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling", "scikit-learn", "numpy", "xgboost", "pqdm"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/conditional_model_reliance"]
+
+[project]
+name = "conditional_model_reliance"
+version = "0.0.2"
+authors = [
+  { name="Akshar Yeccherla", email="aksharye@gmail.com" },
+]
+description = "Python package for the conditional model reliance (CMR, see Fisher et al. 2019) variable importance metric."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/aksharye/conditional-model-reliance"
+Issues = "https://github.com/aksharye/conditional-model-reliance/issues"

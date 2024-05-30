@@ -3,9 +3,7 @@
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from xgboost import XGBClassifier, XGBRegressor
 import numpy as np
-import pandas as pd
 from pqdm.threads import pqdm
-from tqdm import tqdm
 
 class CMR:
     """
